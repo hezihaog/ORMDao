@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/insert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="增" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="删" />
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="改" />
+
+    <Button
+        android:id="@+id/queryAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询全部" />
+
+    <Button
+        android:id="@+id/queryAllAsc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询全部 （正序）" />
+
+    <Button
+        android:id="@+id/queryAllDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询全部 （反序）" />
+
+    <Button
+        android:id="@+id/queryAllPaging"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询 （分页）" />
+</LinearLayout>

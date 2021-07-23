@@ -13,5 +13,4 @@ import com.hzh.orm.dao.sample.model.User;
  */
 
 public class UserDao extends BaseDao<User> {
-
 }

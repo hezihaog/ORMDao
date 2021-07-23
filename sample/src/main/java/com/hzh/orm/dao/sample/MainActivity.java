@@ -15,68 +15,76 @@ import com.hzh.orm.dao.sample.model.User;
 import java.io.File;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     private static final String DB_NAME = "orm_dao.db";
     private static final String userName = "wally";
 
-    private Button insert;
-    private Button delete;
-    private Button update;
-    private Button queryAll;
-    private Button queryAllAsc;
-    private Button queryAllDesc;
-    private Button queryAllPaging;
     private UserDao mUserDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.insert = (Button) findViewById(R.id.insert);
-        this.delete = (Button) findViewById(R.id.delete);
-        this.update = (Button) findViewById(R.id.update);
-        this.queryAll = (Button) findViewById(R.id.queryAll);
-        this.queryAllAsc = (Button) findViewById(R.id.queryAllAsc);
-        this.queryAllDesc = (Button) findViewById(R.id.queryAllDesc);
-        this.queryAllPaging = (Button) findViewById(R.id.queryAllPaging);
-
-        insert.setOnClickListener(this);
-        delete.setOnClickListener(this);
-        update.setOnClickListener(this);
-        queryAll.setOnClickListener(this);
-        queryAllAsc.setOnClickListener(this);
-        queryAllDesc.setOnClickListener(this);
-        queryAllPaging.setOnClickListener(this);
-
-        DaoManager.init(new File(getFilesDir(), DB_NAME).getAbsolutePath());
-        mUserDao = BaseDaoFactory.getInstance().createDao(UserDao.class, User.class);
+        initView();
+        initDb();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.insert:
+    private void initView() {
+        Button insertBtn = (Button) findViewById(R.id.insert);
+        Button deleteBtn = (Button) findViewById(R.id.delete);
+        Button updateBtn = (Button) findViewById(R.id.update);
+        Button queryAllBtn = (Button) findViewById(R.id.queryAll);
+        Button queryAllAscBtn = (Button) findViewById(R.id.queryAllAsc);
+        Button queryAllDescBtn = (Button) findViewById(R.id.queryAllDesc);
+        Button queryAllPagingBtn = (Button) findViewById(R.id.queryAllPaging);
+
+        insertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 insert();
-                break;
-            case R.id.delete:
+            }
+        });
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 delete();
-                break;
-            case R.id.update:
+            }
+        });
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 update();
-                break;
-            case R.id.queryAll:
+            }
+        });
+        queryAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 queryAll();
-                break;
-            case R.id.queryAllAsc:
+            }
+        });
+        queryAllAscBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 queryAllAsc();
-                break;
-            case R.id.queryAllDesc:
+            }
+        });
+        queryAllDescBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 queryAllDesc();
-                break;
-            case R.id.queryAllPaging:
+            }
+        });
+        queryAllPagingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 queryAllPaging();
-                break;
-        }
+            }
+        });
+    }
+
+    private void initDb() {
+        DaoManager.init(new File(getFilesDir(), DB_NAME).getAbsolutePath());
+        mUserDao = BaseDaoFactory.getInstance().createDao(UserDao.class, User.class);
     }
 
     private void toast(String msg) {
@@ -89,7 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void insert() {
         User user = new User(userName, "i am wally", "23");
         Long id = mUserDao.insert(user);
-        toast("添加了" + (id != -1 ? 1 : 0) + "条数据");
+        if (id != -1) {
+            toast("添加成功：" + user.toString());
+        } else {
+            toast("添加失败");
+        }
     }
 
     /**
@@ -109,7 +121,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User where = new User();
         where.setUserName(userName);
         Integer update = mUserDao.update(user, where);
-        toast("修改了" + update + "条数据");
+        if (update != -1) {
+            toast("修改成功" + user.toString());
+        } else {
+            toast("修改失败");
+        }
     }
 
     /**
@@ -119,11 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User where = new User();
         where.setUserName(userName);
         List<User> list = mUserDao.query(where);
-        int query = list == null ? 0 : list.size();
-        toast("查出了" + query + "条数据");
-        for (User user : list) {
-            L.d(user);
-        }
+        toast(list.toString());
     }
 
     /**
@@ -131,11 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void queryAllAsc() {
         List<User> list = mUserDao.query(null, "tb_age asc");
-        int query = list == null ? 0 : list.size();
-        toast("查出了" + query + "条数据");
-        for (User user : list) {
-            L.d(user);
-        }
+        toast(list.toString());
     }
 
     /**
@@ -143,11 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void queryAllDesc() {
         List<User> list = mUserDao.query(null, "tb_age desc");
-        int query = list == null ? 0 : list.size();
-        toast("查出了" + query + "条数据");
-        for (User user : list) {
-            L.d(user);
-        }
+        toast(list.toString());
     }
 
     /**
@@ -156,10 +160,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void queryAllPaging() {
         User where = new User();
         List<User> list = mUserDao.query(where, null, 1, 2);
-        int query = list == null ? 0 : list.size();
-        toast("查出了" + query + "条数据");
-        for (User user : list) {
-            L.d(user);
-        }
+        toast(list.toString());
     }
 }

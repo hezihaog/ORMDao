@@ -2,13 +2,7 @@ package com.hzh.orm.dao.base;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.text.TextUtils;
-import android.util.Log;
 
-import com.hzh.orm.dao.anno.TbField;
-
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 

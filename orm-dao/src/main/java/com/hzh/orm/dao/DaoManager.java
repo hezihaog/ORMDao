@@ -1,5 +1,9 @@
 package com.hzh.orm.dao;
 
+import android.database.sqlite.SQLiteDatabase;
+
+import com.hzh.orm.dao.base.BaseDao;
+
 /**
  * Package: com.hzh.orm.dao
  * FileName: DaoManager
@@ -10,14 +14,11 @@ package com.hzh.orm.dao;
  */
 
 public class DaoManager {
-    private String mDbPath;
+    //数据库存放的路径
+    private static String mDbPath;
     private static boolean isInitSuccess = false;
 
     private DaoManager() {
-    }
-
-    private static final class SingletonHolder {
-        private static final DaoManager instance = new DaoManager();
     }
 
     /**
@@ -26,19 +27,29 @@ public class DaoManager {
      * @param dbPath 数据库存储地址
      */
     public static void init(String dbPath) {
-        DaoManager instance = SingletonHolder.instance;
-        instance.mDbPath = dbPath;
+        mDbPath = dbPath;
         isInitSuccess = true;
     }
 
     /**
-     * 获取实例，必须先调用init方法进行初始化
+     * 创建Dao实例
+     *
+     * @param clazz  Dao类Class
+     * @param entity Dao类对应的Model层类Class
+     * @return 要构造的Dao实例
      */
-    public static DaoManager getInstance() {
-        if (!isInitSuccess) {
-            throw new RuntimeException("请先调用init方法进行初始化");
+    public static <D extends BaseDao<M>, M> D createDao(Class<D> clazz, Class<M> entity) {
+        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(mDbPath, null);
+        BaseDao<M> dao = null;
+        try {
+            dao = (BaseDao<M>) clazz.newInstance();
+            dao.init(database, entity);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        return SingletonHolder.instance;
+        return (D) dao;
     }
 
     /**
@@ -46,7 +57,7 @@ public class DaoManager {
      *
      * @return 设置的数据库存储路径
      */
-    public String getDbPath() {
+    public static String getDbPath() {
         return mDbPath;
     }
 

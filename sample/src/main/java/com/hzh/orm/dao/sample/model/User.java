@@ -1,7 +1,7 @@
 package com.hzh.orm.dao.sample.model;
 
-import com.hzh.orm.dao.anno.TbField;
-import com.hzh.orm.dao.anno.TbName;
+import com.hzh.orm.dao.annotation.TbField;
+import com.hzh.orm.dao.annotation.TbName;
 import com.hzh.orm.dao.inter.IModel;
 
 /**

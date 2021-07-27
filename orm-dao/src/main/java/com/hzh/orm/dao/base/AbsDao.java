@@ -6,14 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.hzh.orm.dao.anno.TbField;
-import com.hzh.orm.dao.anno.TbName;
+import com.hzh.orm.dao.annotation.TbField;
+import com.hzh.orm.dao.annotation.TbName;
 import com.hzh.orm.dao.inter.IDao;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public abstract class AbsDao<M> implements IDao<M> {
      * @param entity   表对应bean对象
      * @return 是否初始化表成功
      */
-    protected boolean init(SQLiteDatabase database, Class<M> entity) {
+    public boolean init(SQLiteDatabase database, Class<M> entity) {
         this.mDatabase = database;
         this.mEntityClass = entity;
         //必须在打开了数据库的情况下进行

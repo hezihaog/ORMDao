@@ -6,9 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.hzh.logger.L;
 import com.hzh.orm.dao.DaoManager;
-import com.hzh.orm.dao.base.BaseDaoFactory;
+import com.hzh.orm.dao.base.DaoFactory;
 import com.hzh.orm.dao.sample.dao.UserDao;
 import com.hzh.orm.dao.sample.model.User;
 
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDb() {
         DaoManager.init(new File(getFilesDir(), DB_NAME).getAbsolutePath());
-        mUserDao = BaseDaoFactory.getInstance().createDao(UserDao.class, User.class);
+        mUserDao = DaoFactory.getInstance().createDao(UserDao.class, User.class);
     }
 
     private void toast(String msg) {

@@ -27,13 +27,22 @@ import java.util.Map;
  */
 
 public abstract class AbsDao<M> implements IDao<M> {
-    //数据库操作对象
+    /**
+     * 数据库操作对象
+     */
     protected SQLiteDatabase mDatabase;
-    //表对应的bean对象
+    /**
+     * 表对应的bean对象
+     */
     protected Class<M> mEntityClass;
-    //表名
+    /**
+     * 表名
+     */
     protected String mTbName;
-    protected Map<String, Field> mFieldMap = new LinkedHashMap<String, Field>();
+    /**
+     * 表字段
+     */
+    protected Map<String, Field> mFieldMap = new LinkedHashMap<>();
 
     /**
      * 初始化表操作对象，例如创建表，获取表字段和对应的bean类的字段映射关系
@@ -57,10 +66,7 @@ public abstract class AbsDao<M> implements IDao<M> {
             return false;
         }
         //开始创建表
-        if (!createTable(database)) {
-            return false;
-        }
-        return true;
+        return createTable(database);
     }
 
     /**
@@ -167,10 +173,8 @@ public abstract class AbsDao<M> implements IDao<M> {
                 Class<M> clazz = (Class<M>) pt.getActualTypeArguments()[0];// 获取第一个类型参数的真实类型
                 M item = clazz.newInstance();
                 // 遍历表字段，使用游标一个个取值，赋值给新创建的对象。
-                Iterator<String> iterator = mFieldMap.keySet().iterator();
-                while (iterator.hasNext()) {
+                for (String columnName : mFieldMap.keySet()) {
                     //找到表字段
-                    String columnName = iterator.next();
                     // 找到表字段对应的类属性
                     Field field = mFieldMap.get(columnName);
                     // 根据类属性类型，使用游标获取表中的值

@@ -11,7 +11,7 @@ package com.hzh.orm.dao;
 
 public class DaoManager {
     private String mDbPath;
-    private static boolean isInited = false;
+    private static boolean isInitSuccess = false;
 
     private DaoManager() {
     }
@@ -24,22 +24,18 @@ public class DaoManager {
      * 初始化
      *
      * @param dbPath 数据库存储地址
-     * @return DaoManager实例
      */
-    public static DaoManager init(String dbPath) {
+    public static void init(String dbPath) {
         DaoManager instance = SingletonHolder.instance;
         instance.mDbPath = dbPath;
-        isInited = true;
-        return instance;
+        isInitSuccess = true;
     }
 
     /**
      * 获取实例，必须先调用init方法进行初始化
-     *
-     * @return
      */
     public static DaoManager getInstance() {
-        if (!isInited) {
+        if (!isInitSuccess) {
             throw new RuntimeException("请先调用init方法进行初始化");
         }
         return SingletonHolder.instance;
@@ -59,7 +55,7 @@ public class DaoManager {
      *
      * @return true为已经初始化，否则没有进行初始化
      */
-    public static boolean isInited() {
-        return isInited;
+    public static boolean isInitSuccess() {
+        return isInitSuccess;
     }
 }

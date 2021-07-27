@@ -22,56 +22,6 @@ import java.util.Map;
  */
 
 public abstract class BaseDao<M> extends AbsDao<M> {
-    private static final String TAG = BaseDao.class.getSimpleName();
-
-    @Override
-    protected boolean createTable(SQLiteDatabase database) {
-        StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, Field> entry : mFieldMap.entrySet()) {
-            //获取列名（字段名）
-            String columnName = entry.getKey();
-            //取出变量
-            Field field = entry.getValue();
-            //获取字段值
-            TbField tbFieldAnnotation = field.getAnnotation(TbField.class);
-            int length = tbFieldAnnotation == null ? 255 : tbFieldAnnotation.length();
-            String type = "";
-            //将变量使用的类型，转换成数据库支持的数据类型
-            Class<?> fieldType = field.getType();
-            if (fieldType == String.class) {
-                type = "varchar";
-            } else if (fieldType == int.class || fieldType == Integer.class) {
-                type = "int";
-            } else if (fieldType == double.class || fieldType == Double.class) {
-                type = "double";
-            } else if (fieldType == float.class || fieldType == Float.class) {
-                type = "float";
-            }
-            //拼接创建表字段语句
-            if (TextUtils.isEmpty(type)) {
-                Log.e(TAG, type.getClass().getName() + "是不支持的字段");
-            } else {
-                builder.append(columnName);
-                builder.append(" ");
-                builder.append(type);
-                builder.append("(");
-                builder.append(length);
-                builder.append("),");
-            }
-        }
-        //删除拼接的sql最后一个"，"，因为遍历map不能拿到角标判断是否是最后一个，所以多拼接一个"，"，最后要删除
-        builder.deleteCharAt(builder.lastIndexOf(","));
-        String str = builder.toString();
-        if (TextUtils.isEmpty(str)) {
-            Log.e(TAG, "获取不到表字段信息");
-            return false;
-        }
-        String sql = "create table if not exists " + mTbName + " (" + str + ") ";
-        Log.e(TAG, "sql ::: ");
-        database.execSQL(sql);
-        return true;
-    }
-
     @Override
     public Long insert(M entity) {
         try {

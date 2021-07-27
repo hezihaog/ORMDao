@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDb() {
         DaoManager.init(new File(getFilesDir(), DB_NAME).getAbsolutePath());
-        mUserDao = DaoFactory.getInstance().createDao(UserDao.class, User.class);
+        mUserDao = DaoFactory.createDao(UserDao.class, User.class);
     }
 
     private void toast(String msg) {

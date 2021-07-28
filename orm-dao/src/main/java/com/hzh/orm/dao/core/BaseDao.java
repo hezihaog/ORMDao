@@ -1,4 +1,4 @@
-package com.hzh.orm.dao.base;
+package com.hzh.orm.dao.core;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.hzh.orm.dao.annotation.TbField;
 import com.hzh.orm.dao.annotation.TbName;
-import com.hzh.orm.dao.inter.IDao;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -26,8 +25,8 @@ import java.util.Map;
  * Email: hezihao@linghit.com
  */
 
-public abstract class AbsDao<M> implements IDao<M> {
-    private static final String TAG = AbsDao.class.getSimpleName();
+public abstract class BaseDao<M> implements IDao<M> {
+    private static final String TAG = BaseDao.class.getSimpleName();
 
     /**
      * 数据库操作对象
@@ -53,7 +52,7 @@ public abstract class AbsDao<M> implements IDao<M> {
      * @param entity   表对应bean对象
      * @return 是否初始化表成功
      */
-    public boolean init(SQLiteDatabase database, Class<M> entity) {
+    public boolean initialize(SQLiteDatabase database, Class<M> entity) {
         this.mDatabase = database;
         this.mEntityClass = entity;
         //必须在打开了数据库的情况下进行

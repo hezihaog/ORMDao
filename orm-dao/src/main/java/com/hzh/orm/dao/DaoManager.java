@@ -2,7 +2,7 @@ package com.hzh.orm.dao;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.hzh.orm.dao.base.BaseDao;
+import com.hzh.orm.dao.core.CRUDDao;
 
 /**
  * Package: com.hzh.orm.dao
@@ -26,7 +26,7 @@ public class DaoManager {
      *
      * @param dbPath 数据库存储地址
      */
-    public static void init(String dbPath) {
+    public static void initialize(String dbPath) {
         mDbPath = dbPath;
         isInitSuccess = true;
     }
@@ -38,12 +38,15 @@ public class DaoManager {
      * @param entity Dao类对应的Model层类Class
      * @return 要构造的Dao实例
      */
-    public static <D extends BaseDao<M>, M> D createDao(Class<D> clazz, Class<M> entity) {
+    public static <D extends CRUDDao<M>, M> D createDao(Class<D> clazz, Class<M> entity) {
         SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(mDbPath, null);
-        BaseDao<M> dao = null;
+        CRUDDao<M> dao = null;
         try {
-            dao = (BaseDao<M>) clazz.newInstance();
-            dao.init(database, entity);
+            dao = (CRUDDao<M>) clazz.newInstance();
+            boolean result = dao.initialize(database, entity);
+            if (!result){
+                throw new RuntimeException("Dao初始化失败");
+            }
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

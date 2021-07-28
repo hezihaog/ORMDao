@@ -1,4 +1,4 @@
-package com.hzh.orm.dao.base;
+package com.hzh.orm.dao.core;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -15,7 +15,7 @@ import java.util.Map;
  * Email: hezihao@linghit.com
  */
 
-public abstract class BaseDao<M> extends AbsDao<M> {
+public class CRUDDao<M> extends BaseDao<M> {
     @Override
     public Long insert(M entity) {
         try {

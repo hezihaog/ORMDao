@@ -1,4 +1,4 @@
-package com.hzh.orm.dao.inter;
+package com.hzh.orm.dao.core;
 
 import java.util.List;
 

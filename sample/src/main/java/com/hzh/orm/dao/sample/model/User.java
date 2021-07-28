@@ -2,7 +2,6 @@ package com.hzh.orm.dao.sample.model;
 
 import com.hzh.orm.dao.annotation.TbField;
 import com.hzh.orm.dao.annotation.TbName;
-import com.hzh.orm.dao.inter.IModel;
 
 /**
  * Package: com.hzh.orm.dao.sample.model
@@ -14,7 +13,7 @@ import com.hzh.orm.dao.inter.IModel;
  */
 
 @TbName("tb_user")
-public class User implements IModel {
+public class User {
     /**
      * 用户名
      */

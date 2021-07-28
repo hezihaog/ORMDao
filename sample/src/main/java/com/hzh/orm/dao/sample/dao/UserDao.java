@@ -1,6 +1,6 @@
 package com.hzh.orm.dao.sample.dao;
 
-import com.hzh.orm.dao.base.BaseDao;
+import com.hzh.orm.dao.core.CRUDDao;
 import com.hzh.orm.dao.sample.model.User;
 
 /**
@@ -12,5 +12,5 @@ import com.hzh.orm.dao.sample.model.User;
  * Email: hezihao@linghit.com
  */
 
-public class UserDao extends BaseDao<User> {
+public class UserDao extends CRUDDao<User> {
 }

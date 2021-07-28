@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDb() {
-        DaoManager.init(new File(getFilesDir(), DB_NAME).getAbsolutePath());
+        DaoManager.initialize(new File(getFilesDir(), DB_NAME).getAbsolutePath());
         mUserDao = DaoManager.createDao(UserDao.class, User.class);
     }
 

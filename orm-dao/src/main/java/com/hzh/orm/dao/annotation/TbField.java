@@ -13,7 +13,6 @@ import java.lang.annotation.Target;
  * Descirbe:数据库字段注解
  * Email: hezihao@linghit.com
  */
-
 @Target(ElementType.FIELD)//作用在成员变量上
 @Retention(RetentionPolicy.RUNTIME)//保留到运行时
 public @interface TbField {

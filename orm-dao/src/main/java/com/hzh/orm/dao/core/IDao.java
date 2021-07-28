@@ -10,7 +10,6 @@ import java.util.List;
  * Descirbe: 数据库操作接口
  * Email: hezihao@linghit.com
  */
-
 public interface IDao<M> {
     /**
      * 插入一条记录
@@ -31,7 +30,7 @@ public interface IDao<M> {
      * 更新一条记录
      *
      * @param entity 表对应的bean对象
-     * @param where   条件
+     * @param where  条件
      */
     Integer update(M entity, M where);
 

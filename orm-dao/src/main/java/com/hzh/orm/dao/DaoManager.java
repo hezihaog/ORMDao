@@ -12,7 +12,6 @@ import com.hzh.orm.dao.core.CRUDDao;
  * Descirbe: 数据库管理器
  * Email: hezihao@linghit.com
  */
-
 public class DaoManager {
     //数据库存放的路径
     private static String mDbPath;
@@ -44,7 +43,7 @@ public class DaoManager {
         try {
             dao = (CRUDDao<M>) clazz.newInstance();
             boolean result = dao.initialize(database, entity);
-            if (!result){
+            if (!result) {
                 throw new RuntimeException("Dao初始化失败");
             }
         } catch (InstantiationException e) {

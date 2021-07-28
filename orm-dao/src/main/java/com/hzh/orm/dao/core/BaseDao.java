@@ -24,7 +24,6 @@ import java.util.Map;
  * Descirbe:
  * Email: hezihao@linghit.com
  */
-
 public abstract class BaseDao<M> implements IDao<M> {
     private static final String TAG = BaseDao.class.getSimpleName();
 

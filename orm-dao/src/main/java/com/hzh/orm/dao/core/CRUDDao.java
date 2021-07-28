@@ -14,7 +14,6 @@ import java.util.Map;
  * Descirbe:
  * Email: hezihao@linghit.com
  */
-
 public class CRUDDao<M> extends BaseDao<M> {
     @Override
     public Long insert(M entity) {

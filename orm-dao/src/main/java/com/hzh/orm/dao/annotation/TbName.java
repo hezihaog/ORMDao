@@ -13,7 +13,6 @@ import java.lang.annotation.Target;
  * Descirbe: 数据库表名注解
  * Email: hezihao@linghit.com
  */
-
 @Target(ElementType.TYPE)//作用在类上
 @Retention(RetentionPolicy.RUNTIME)//保留到运行时
 public @interface TbName {

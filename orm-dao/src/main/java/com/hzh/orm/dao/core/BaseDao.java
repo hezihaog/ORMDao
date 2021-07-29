@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.hzh.orm.dao.ORMDao;
 import com.hzh.orm.dao.annotation.TbField;
@@ -25,8 +24,6 @@ import java.util.Map;
  * Descirbe:
  */
 public abstract class BaseDao<M> implements IDao<M> {
-    private static final String TAG = BaseDao.class.getSimpleName();
-
     /**
      * 数据库操作对象
      */
@@ -122,7 +119,7 @@ public abstract class BaseDao<M> implements IDao<M> {
             }
             //拼接创建表字段语句
             if (TextUtils.isEmpty(type)) {
-                Log.e(TAG, type.getClass().getName() + "是不支持的字段");
+                DaoLogger.error(type.getClass().getName() + "是不支持的字段");
             } else {
                 builder.append(columnName);
                 builder.append(" ");
@@ -136,11 +133,11 @@ public abstract class BaseDao<M> implements IDao<M> {
         builder.deleteCharAt(builder.lastIndexOf(","));
         String str = builder.toString();
         if (TextUtils.isEmpty(str)) {
-            Log.e(TAG, "获取不到表字段信息");
+            DaoLogger.error("获取不到表字段信息");
             return false;
         }
         String sql = "create table if not exists " + mTbName + " (" + str + ") ";
-        Log.e(TAG, "sql ::: ");
+        DaoLogger.error("sql ::: ");
         database.execSQL(sql);
         return true;
     }

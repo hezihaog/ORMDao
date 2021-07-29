@@ -16,19 +16,19 @@ public class User {
     /**
      * 用户名
      */
-    @TbField(value = "tb_user_name", length = 30)
+    @TbField(value = "user_name", length = 30)
     public String userName;
 
     /**
      * 个性签名
      */
-    @TbField(value = "tb_sign", length = 20)
+    @TbField(value = "sign", length = 20)
     public String sign;
 
     /**
      * 年龄
      */
-    @TbField(value = "tb_age", length = 11)
+    @TbField(value = "age", length = 11)
     public String age;
 
     public User() {

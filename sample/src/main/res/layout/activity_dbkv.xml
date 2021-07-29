@@ -43,6 +43,12 @@
             android:text="插入boolean" />
 
         <Button
+            android:id="@+id/delete_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="删除所有" />
+
+        <Button
             android:id="@+id/get_string"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,11 +65,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="是否包含某个值" />
-
-        <Button
-            android:id="@+id/delete_all"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="删除所有" />
     </LinearLayout>
 </ScrollView>

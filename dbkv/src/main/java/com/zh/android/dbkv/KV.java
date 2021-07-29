@@ -11,13 +11,13 @@ public class KV {
     /**
      * Key
      */
-    @TbField(value = "tb_key", length = 30)
+    @TbField(value = "key", length = 255)
     public String key;
 
     /**
      * Value
      */
-    @TbField(value = "tb_value", length = 20)
+    @TbField(value = "value", length = 255)
     public String value;
 
     public KV() {

@@ -24,7 +24,7 @@ public class DBKVSampleActivity extends AppCompatActivity implements SharedPrefe
             public void onClick(View v) {
                 DBKV.getInstance(DBKVSampleActivity.this)
                         .edit()
-                        .putString("key_string", "string_value")
+                        .putString("key_string", "Hello DBKV")
                         .apply();
             }
         });
@@ -64,11 +64,27 @@ public class DBKVSampleActivity extends AppCompatActivity implements SharedPrefe
                         .apply();
             }
         });
+        findViewById(R.id.delete_all).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBKV dbkv = DBKV.getInstance(DBKVSampleActivity.this);
+                //删除所有
+                dbkv.edit().clear().apply();
+                //查询一下
+                Map<String, ?> resultMap = dbkv.getAll();
+                //为空，则删除成功
+                if (resultMap.isEmpty()) {
+                    toast("删除成功");
+                } else {
+                    toast("删除失败");
+                }
+            }
+        });
         findViewById(R.id.get_string).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String value = DBKV.getInstance(DBKVSampleActivity.this)
-                        .getString("key_int", "default_string");
+                        .getString("key_string", "default string");
                 toast(value);
             }
         });
@@ -84,22 +100,6 @@ public class DBKVSampleActivity extends AppCompatActivity implements SharedPrefe
             public void onClick(View v) {
                 boolean isContains = DBKV.getInstance(DBKVSampleActivity.this).contains("key_string");
                 toast("isContains => " + isContains);
-            }
-        });
-        findViewById(R.id.delete_all).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DBKV dbkv = DBKV.getInstance(DBKVSampleActivity.this);
-                //删除所有
-                dbkv.edit().clear().apply();
-                //查询一下
-                Map<String, ?> resultMap = dbkv.getAll();
-                //为空，则删除成功
-                if (resultMap.isEmpty()) {
-                    toast("删除成功");
-                } else {
-                    toast("删除失败");
-                }
             }
         });
         //注册变化监听

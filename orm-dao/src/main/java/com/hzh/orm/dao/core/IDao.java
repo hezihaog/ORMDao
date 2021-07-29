@@ -1,5 +1,7 @@
 package com.hzh.orm.dao.core;
 
+import com.hzh.orm.dao.ORMDao;
+
 import java.util.List;
 
 /**
@@ -8,9 +10,13 @@ import java.util.List;
  * Date: on 2017/12/3  上午11:36
  * Auther: zihe
  * Descirbe: 数据库操作接口
- * Email: hezihao@linghit.com
  */
 public interface IDao<M> {
+    /**
+     * 初始化
+     */
+    boolean initialize(ORMDao ormDao, Class<M> entity);
+
     /**
      * 插入一条记录
      *

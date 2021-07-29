@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.hzh.orm.dao.DaoManager;
+import com.hzh.orm.dao.ORMDao;
 import com.hzh.orm.dao.sample.dao.UserDao;
 import com.hzh.orm.dao.sample.model.User;
 
@@ -14,7 +14,6 @@ import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String DB_NAME = "orm_dao.db";
     private static final String userName = "wally";
 
     private UserDao mUserDao;
@@ -81,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDb() {
-        DaoManager.initialize(new File(getFilesDir(), DB_NAME).getAbsolutePath());
-        mUserDao = DaoManager.createDao(UserDao.class, User.class);
+        mUserDao = ORMDao.getDefault(this).getDao(UserDao.class, User.class);
     }
 
     private void toast(String msg) {

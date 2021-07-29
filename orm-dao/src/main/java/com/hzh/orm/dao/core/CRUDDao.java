@@ -12,7 +12,6 @@ import java.util.Map;
  * Date: on 2017/12/3  上午11:42
  * Auther: zihe
  * Descirbe:
- * Email: hezihao@linghit.com
  */
 public class CRUDDao<M> extends BaseDao<M> {
     @Override

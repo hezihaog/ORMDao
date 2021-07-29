@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
  * Date: on 2017/12/3  上午11:33
  * Auther: zihe
  * Descirbe: 数据库表名注解
- * Email: hezihao@linghit.com
  */
 @Target(ElementType.TYPE)//作用在类上
 @Retention(RetentionPolicy.RUNTIME)//保留到运行时

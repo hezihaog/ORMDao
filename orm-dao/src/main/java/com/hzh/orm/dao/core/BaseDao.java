@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.hzh.orm.dao.ORMDao;
 import com.hzh.orm.dao.annotation.TbField;
 import com.hzh.orm.dao.annotation.TbName;
 
@@ -22,7 +23,6 @@ import java.util.Map;
  * Date: on 2017/12/3  下午11:32
  * Auther: zihe
  * Descirbe:
- * Email: hezihao@linghit.com
  */
 public abstract class BaseDao<M> implements IDao<M> {
     private static final String TAG = BaseDao.class.getSimpleName();
@@ -47,11 +47,12 @@ public abstract class BaseDao<M> implements IDao<M> {
     /**
      * 初始化表操作对象，例如创建表，获取表字段和对应的bean类的字段映射关系
      *
-     * @param database 数据库对象
-     * @param entity   表对应bean对象
+     * @param ormDao ORMDao实例
+     * @param entity 表对应bean对象
      * @return 是否初始化表成功
      */
-    public boolean initialize(SQLiteDatabase database, Class<M> entity) {
+    public boolean initialize(ORMDao ormDao, Class<M> entity) {
+        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(ormDao.getDbPath(), null);
         this.mDatabase = database;
         this.mEntityClass = entity;
         //必须在打开了数据库的情况下进行

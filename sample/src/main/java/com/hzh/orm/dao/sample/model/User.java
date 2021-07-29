@@ -9,7 +9,6 @@ import com.hzh.orm.dao.annotation.TbName;
  * Date: on 2017/12/4  下午1:48
  * Auther: zihe
  * Descirbe:
- * Email: hezihao@linghit.com
  */
 
 @TbName("tb_user")

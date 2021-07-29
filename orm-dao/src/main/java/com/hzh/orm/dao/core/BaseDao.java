@@ -1,5 +1,6 @@
 package com.hzh.orm.dao.core;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -73,9 +74,12 @@ public abstract class BaseDao<M> implements IDao<M> {
      * @return 是否获取成功
      */
     private boolean generateFieldMap() {
+        if (mEntityClass == null) {
+            return false;
+        }
         //获取表映射类中的public字段，包括父类
         Field[] fields = mEntityClass.getFields();
-        if (fields == null || fields.length == 0) {
+        if (fields.length == 0) {
             //类中无任何字段
             return false;
         }
@@ -154,7 +158,7 @@ public abstract class BaseDao<M> implements IDao<M> {
         public Condition(Map<String, String> whereMap) {
             StringBuilder builder = new StringBuilder();
             //条件占位符对应的数值的集合
-            ArrayList<String> list = new ArrayList<String>();
+            ArrayList<String> list = new ArrayList<>();
             String andStr = "and ";
             for (Map.Entry<String, String> entry : whereMap.entrySet()) {
                 if (!TextUtils.isEmpty(entry.getValue())) {
@@ -168,7 +172,7 @@ public abstract class BaseDao<M> implements IDao<M> {
             }
             //删除开头的"and "，第一句不需要
             this.whereClause = builder.delete(0, andStr.length()).toString();
-            this.whereArgs = list.toArray(new String[list.size()]);
+            this.whereArgs = list.toArray(new String[]{});
         }
     }
 
@@ -176,7 +180,6 @@ public abstract class BaseDao<M> implements IDao<M> {
      * 将bean类的字段变量的字段名和值转换成Map键值对
      *
      * @return Map键值对对象
-     * @throws IllegalAccessException
      */
     protected Map<String, String> getValues(M entity) throws IllegalAccessException {
         LinkedHashMap<String, String> result = new LinkedHashMap<>();
@@ -205,20 +208,25 @@ public abstract class BaseDao<M> implements IDao<M> {
     /**
      * 通过游标，将表中数据转成对象集合
      */
+    @SuppressLint("Range")
     protected List<M> getDataList(Cursor cursor) throws IllegalAccessException, InstantiationException {
         if (cursor != null) {
-            List<M> result = new ArrayList<M>();
-            // 遍历游标，获取表中一行行的数据
+            List<M> result = new ArrayList<>();
+            // 遍历游标，获取表中每一行数据
             while (cursor.moveToNext()) {
                 //获取当前new的对象的 泛型的父类 类型
                 ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
-                Class<M> clazz = (Class<M>) pt.getActualTypeArguments()[0];// 获取第一个类型参数的真实类型
+                //获取第一个类型参数的真实类型
+                Class<M> clazz = (Class<M>) pt.getActualTypeArguments()[0];
                 M item = clazz.newInstance();
                 // 遍历表字段，使用游标一个个取值，赋值给新创建的对象。
                 for (String columnName : mFieldMap.keySet()) {
                     //找到表字段
                     // 找到表字段对应的类属性
                     Field field = mFieldMap.get(columnName);
+                    if (field == null) {
+                        continue;
+                    }
                     // 根据类属性类型，使用游标获取表中的值
                     Object val = null;
                     Class<?> fieldType = field.getType();

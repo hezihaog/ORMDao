@@ -71,7 +71,7 @@ public class CRUDDao<M> extends BaseDao<M> {
             String limit = null;
             if (page != null && pageCount != null) {
                 int startIndex = --page;
-                limit = (startIndex < 0 ? 0 : startIndex) + "," + pageCount;
+                limit = (Math.max(startIndex, 0)) + "," + pageCount;
             }
             if (where != null) {
                 Map<String, String> whereMap = getValues(where);
@@ -81,9 +81,7 @@ public class CRUDDao<M> extends BaseDao<M> {
                 cursor = mDatabase.query(mTbName, null, null, null, null, null, orderBy, limit);
             }
             list = getDataList(cursor);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null) {

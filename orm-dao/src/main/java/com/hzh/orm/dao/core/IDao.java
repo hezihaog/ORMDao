@@ -33,6 +33,11 @@ public interface IDao<M> {
     Integer delete(M where);
 
     /**
+     * 删除所有记录
+     */
+    Integer deleteAll();
+
+    /**
      * 更新一条记录
      *
      * @param entity 表对应的bean对象

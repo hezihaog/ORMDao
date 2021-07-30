@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import com.hzh.orm.dao.ORMDao;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -70,17 +69,7 @@ public class DBKV implements SharedPreferences {
 
     @Override
     public Set<String> getStringSet(String key, Set<String> defValues) {
-        KV where = new KV(key);
-        //多条记录保存
-        List<KV> list = mDao.query(where);
-        if (list.isEmpty()) {
-            return defValues;
-        }
-        Set<String> resultSet = new HashSet<>();
-        for (KV kv : list) {
-            resultSet.add(kv.getValue());
-        }
-        return resultSet;
+        throw new RuntimeException("不支持该功能");
     }
 
     @Override
@@ -160,7 +149,7 @@ public class DBKV implements SharedPreferences {
     }
 
     private class KVEditor implements Editor {
-        private SharedPreferences mSharedPreferences;
+        private final SharedPreferences mSharedPreferences;
 
         public KVEditor(SharedPreferences sharedPreferences) {
             mSharedPreferences = sharedPreferences;
@@ -210,10 +199,7 @@ public class DBKV implements SharedPreferences {
 
         @Override
         public Editor clear() {
-            List<KV> list = mDao.query(null);
-            for (KV kv : list) {
-                mDao.delete(kv);
-            }
+            mDao.deleteAll();
             return this;
         }
 

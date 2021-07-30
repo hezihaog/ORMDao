@@ -39,6 +39,11 @@ public class CRUDDao<M> extends BaseDao<M> {
     }
 
     @Override
+    public Integer deleteAll() {
+        return mDatabase.delete(mTbName, null, null);
+    }
+
+    @Override
     public Integer update(M entity, M where) {
         try {
             Map<String, String> values = getValues(entity);
